@@ -39,31 +39,31 @@ PS > . .\Compare-FileHash.ps1
 Here's how to use the Compare-FileHash function:
 
 1. Import the function into your PowerShell session:
-    ```
-    . .\Compare-FileHash.ps1
-    ```
+```
+. .\Compare-FileHash.ps1
+```
 
 2. Use the function:
 
 - Compare SHA512 hashes of two files:
-	```
-	Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
-	```
+```
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
+```
 
 - Compare SHA512 hashes of multiple files, suppressing individual hash results:
-	```
-	Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
-	```
+```
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
+```
 
 - Compare SHA512 hashes of two files, and return 'MATCH' on the first algorithm match, skipping subsequent algorithms:
-	```
-	Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick
-	```
+```
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick
+```
 
 - Compare the specified hashing algorithms of two files:
-	```
-	Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,MD5,SHA384
-	```
+```
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,MD5,SHA384
+```
 
 ## Parameters
 

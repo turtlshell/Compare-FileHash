@@ -93,7 +93,7 @@ Compare-FileHash supports all algorithms which are supported by the native cmdle
 - SHA1*
 - MD5*
 
-See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.3#parameters) for more info.
+See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash#parameters) for more info.
 
 \* Please note that these hashes are now considered insecure, and are vulnerable to certain attacks. If you're dealing with something sensitive or mission critical, consider using SHA256 or above.
 

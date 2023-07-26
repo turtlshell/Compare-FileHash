@@ -2,7 +2,7 @@
 
 A native PowerShell function which can be used to compare the hash values of a list of files using various hashing algorithms. The function uses SHA512 as the default algorithm, but you can specify which algorithm(s) you want to use.
 
-It prints the result of each hash, unless the '-Quiet' switch is used. If all hash values match (or if one value matches using the '-Quick' switch), it will print 'MATCH'. If any hash value does not match, it will print 'MISMATCH'.
+It prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hash values match (or if one algorithm's values match, using the '-Quick' switch), it will print 'MATCH'. If any hash value does not match, it will print 'MISMATCH'.
 
 ## Table of Contents
 

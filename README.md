@@ -19,7 +19,7 @@ To clone and use this function, install & use Git. From PowerShell:
 
 ```
 # Clone this repository
-PS > git clone https://github.com/turtlshell/Compare-FileHash
+PS > git clone https://github.com/turtlshell/Compare-FileHash.git
 
 # Extract the archive
 PS > Expand-Archive Compare-FileHash.zip

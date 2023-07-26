@@ -21,7 +21,7 @@ To clone and use this repository, [install](https://github.com/git-guides/instal
 
 ```
 # Clone this repository
-PS > git clone https://github.com/turtlshell/Compare-FileHash
+PS > git clone https://github.com/turtlshell/Compare-FileHash.git
 
 # Extract the archive
 PS > Expand-Archive Compare-FileHash-main.zip

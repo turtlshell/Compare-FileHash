@@ -4,7 +4,7 @@ A native PowerShell(5+) cmdlet which can be used to compare the hash values of a
 
 SHA512 is used by default, but you may specify which algorithm(s) you want to use.
 
-The cmdlet prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or if one algorithm's hashes match, using the '-Quick' switch), it will print 'MATCH'. If any hash does not match, it will print 'MISMATCH'.
+The cmdlet prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or if one algorithm's hashes match, using the '-Quick' switch), it will return 'MATCH'. If any hash does not match, it will return 'MISMATCH'.
 
 ## Table of Contents
 
@@ -81,7 +81,7 @@ Suppresses the individual hash values from being printed; only the final result 
 
 #### -Quick (optional)
 
-Prints 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
+Returns 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
 
 ## Algorithms
 

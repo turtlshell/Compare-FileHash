@@ -2,31 +2,32 @@
 
 <#
 .SYNOPSIS
-Compares the hash values of a list of files using multiple algorithms.
+Compares the hashes of a list of files using various algorithms.
 
 .DESCRIPTION
 The Compare-FileHash function will compare the hash values of a list of files. The files are 
-passed to the function as parameters. The function will use the SHA512, or a list of user-specified
-algorithms, to perform the comparison. It will print the result of each hash comparison 
-unless the -Quiet switch is passed. Finally, it will print either 'MATCH' if all hash 
-values matched or 'MISMATCH' if one of the hash values did not match.
+passed to the function as a parameter, separated by commas. The function will use SHA512,
+or a list of user-specified algorithms, to perform the comparison. It will print the result
+of each hash comparison unless the -Quiet switch is passed. Finally, it will return either
+'MATCH' if all hash values matched or 'MISMATCH' if one of the hash values did not match.
 
 .PARAMETER Files
-The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths
-must be supplied, however there is no maximum limit. This parameter is mandatory.
-
-.PARAMETER Quiet
-If passed, will suppress the individual hash values from being printed, 
-and only the final result ('MATCH' or 'MISMATCH') will be printed.
-
-.PARAMETER Quick
-If passed, will print 'MATCH' if the first computed algorithm's hashes match.
-This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
+The list of file paths, separated by commas, to compare the hashes of.
+A minimum of two paths must be supplied, however there is no upper limit.
 
 .PARAMETER Algorithm
-If passed, will determine which algorithm(s) are used to compute the supplied files' hashes.
+Determines which algorithm(s) are used to compute the specified files' hashes.
 You may pass any number of algorithms, separated by commas, which the Get-FileHash cmdlet supports.
 Passing "All" will run all algorithms, and if this parameter is not passed, it will default to SHA512.
+
+.PARAMETER Quiet
+Suppresses the individual hash values from being printed;
+only the final result ('MATCH' or 'MISMATCH') will be printed.
+
+.PARAMETER Quick
+Returns 'MATCH' if the first computed algorithm's hashes match.
+This skips the calculation and comparison of any subsequent
+algorithm's hashes if they are not needed.
 
 .EXAMPLE
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
@@ -43,7 +44,7 @@ and only print the final comparison result ('MATCH' or 'MISMATCH') without any f
 .EXAMPLE
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick -Algorithm All
 
-In this example, the function will compare all algorithms' hashes of file1.txt and file2.txt and
+In this example, the function will start comparing all algorithms' hashes of file1.txt and file2.txt and
 will return 'MATCH' immediately if the first algorithm matches, skipping the other algorithms.
 
 .EXAMPLE

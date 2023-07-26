@@ -41,9 +41,9 @@ In this example, the function will compare the SHA512 hashes of file1.txt, file2
 and only print the final comparison result ('MATCH' or 'MISMATCH') without any further verbosity.
 
 .EXAMPLE
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick -Algorithm All
 
-In this example, the function will compare the SHA512 hashes of file1.txt and file2.txt and
+In this example, the function will compare all algorithms' hashes of file1.txt and file2.txt and
 will return 'MATCH' immediately if the first algorithm matches, skipping the other algorithms.
 
 .EXAMPLE
@@ -93,9 +93,8 @@ function Compare-FileHash {
 
 	if ($invalidPath) { break }
 
-	# If user selects 'All', use all algorithms. Else, split the algorithms string by commas and use those
-	$algorithms = @("SHA512","SHA384","SHA256","SHA1","MD5")
-	if ($Algorithm -notcontains "All") { $algorithms = $Algorithm.Split(",")}
+	# If user's algorithm selection contains "All", run all algorithms, else just run what user specifies
+	$algorithms = if ($Algorithm -contains "All") { @("SHA512","SHA384","SHA256","SHA1","MD5") } else { $Algorithm }
 
 	function Compare-Hashes {
 		param ($alg)

@@ -6,7 +6,7 @@ It prints the result of each hash for each file (unless the '-Quiet' switch is u
 
 ## Table of Contents
 
-- [Installation & Setup](#installation&setup)
+- [Installation & Setup](#installation--setup)
 - [Usage](#usage)
 - [Parameters](#parameters)
 - [Algorithms](#algorithms)

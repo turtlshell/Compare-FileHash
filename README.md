@@ -12,7 +12,7 @@ SHA512 is used by default, but you may specify which algorithm(s) you want to us
 
 The cmdlet prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or if one algorithm's hashes match, using the '-Quick' switch), it will return 'MATCH'. If any hash does not match, it will return 'MISMATCH'.
 
-## Table of Contents
+## Table of Contents 🗂️
 
 - [Installation & Setup](#installation--setup)
 - [Usage](#usage)
@@ -21,9 +21,9 @@ The cmdlet prints the result of each hash for each file (unless the '-Quiet' swi
 - [License](#license)
 - [Contribution](#contribution)
 
-## Installation & Setup
+## Installation & Setup 🔧
 
-To clone and use this repository, [install](https://github.com/git-guides/install-git) & use Git. From PowerShell:
+Download the zip directly, or [install](https://github.com/git-guides/install-git) & use Git. From PowerShell:
 
 ```
 # Clone this repository
@@ -32,7 +32,7 @@ PS > git clone https://github.com/turtlshell/Compare-FileHash.git
 # Extract the archive
 PS > Expand-Archive Compare-FileHash-main.zip
 
-# CD into the repository
+# CD into the repository directory
 PS > cd Compare-FileHash-main
 
 # (Optional, depending on your security settings) Set Execution Policy
@@ -42,7 +42,7 @@ PS > Set-ExecutionPolicy Bypass -Scope Process
 PS > . .\Compare-FileHash.ps1
 ```
 
-## Usage
+## Usage 💡
 
 1. Import the file into your PowerShell session:
 ```
@@ -71,7 +71,7 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick -Algorithm All
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,MD5,SHA384
 ```
 
-## Parameters
+## Parameters ⚙️
 
 #### -Files (mandatory)
 
@@ -89,7 +89,7 @@ Suppresses the individual hash values from being printed; only the final result 
 
 Returns 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
 
-## Algorithms
+## Algorithms 🧮
 
 Compare-FileHash supports all algorithms which are supported by the native cmdlet Get-FileHash. As of right now, those are:
 
@@ -113,4 +113,4 @@ Contributions and issues are welcome. I will consider feature requests if I like
 
 Give a ⭐️ if you found this useful!
 
-This readme was last updated on July 27, 2023.
+This readme was last updated on July 26, 2023.

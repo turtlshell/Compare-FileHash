@@ -2,13 +2,13 @@
 
 A native PowerShell(5+) cmdlet which can be used to compare the hash values of a list of files using various hashing algorithms. 
 
-SHA512 is the default, but you may specify which algorithm(s) you want to use.
+SHA512 is used by default, but you may specify which algorithm(s) you want to use.
 
 The cmdlet prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or if one algorithm's hashes match, using the '-Quick' switch), it will print 'MATCH'. If any hash does not match, it will print 'MISMATCH'.
 
 ## Table of Contents
 
-- [Installation & Setup](#installation&setup)
+- [Installation & Setup](#installation--setup)
 - [Usage](#usage)
 - [Parameters](#parameters)
 - [Algorithms](#algorithms)
@@ -32,27 +32,25 @@ PS > cd Compare-FileHash-main
 # (Optional, depending on your security settings) Set Execution Policy
 PS > Set-ExecutionPolicy Bypass -Scope Process
 
-# Import the cmdlet
+# Import the file
 PS > . .\Compare-FileHash.ps1
 ```
 
 ## Usage
 
-Here's how to use the Compare-FileHash cmdlet:
-
-1. Import the cmdlet into your PowerShell session:
+1. Import the file into your PowerShell session:
 ```
 . .\Compare-FileHash.ps1
 ```
 
 2. Use the cmdlet (examples):
 
-- Compare SHA512 hashes of two files:
+- Compare SHA512 of two files:
 ```
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
 ```
 
-- Compare SHA512 hashes of multiple files, suppressing individual hash results:
+- Compare SHA512 of multiple files, suppressing individual hash results:
 ```
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 ```
@@ -71,19 +69,19 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,MD5,SHA384
 
 #### -Files (mandatory)
 
-The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied, however there is no maximum limit.
+The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied, however there is no upper limit.
 
 #### -Algorithm (optional)
 
-If passed, will determine which algorithm(s) are used to compute the supplied files' hashes. You may pass any number of algorithms, separated by commas, which the Get-FileHash cmdlet supports. Passing "All" will run all algorithms, and if this parameter is not passed, it will default to SHA512.
+Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of algorithms, separated by commas, which the Get-FileHash cmdlet supports. Passing "All" will run all algorithms, and if this parameter is not passed, it will default to SHA512.
 
 #### -Quiet (optional)
 
-If passed, will suppress the individual hash values from being printed, and only the final result ('MATCH' or 'MISMATCH') will be printed.
+Suppresses the individual hash values from being printed; only the final result ('MATCH' or 'MISMATCH') will be printed.
 
 #### -Quick (optional)
 
-If passed, will print 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
+Prints 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
 
 ## Algorithms
 

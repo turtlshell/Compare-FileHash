@@ -1,12 +1,14 @@
 # Compare-FileHash
 
-A native PowerShell function which can be used to compare the hash values of a list of files using various hashing algorithms. The function uses SHA512 as the default algorithm, but you can specify which algorithm(s) you want to use.
+A native PowerShell(5+) cmdlet which can be used to compare the hash values of a list of files using various hashing algorithms. 
 
-It prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hash values match (or if one algorithm's values match, using the '-Quick' switch), it will print 'MATCH'. If any hash value does not match, it will print 'MISMATCH'.
+SHA512 is the default, but you may specify which algorithm(s) you want to use.
+
+The cmdlet prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or if one algorithm's hashes match, using the '-Quick' switch), it will print 'MATCH'. If any hash does not match, it will print 'MISMATCH'.
 
 ## Table of Contents
 
-- [Installation & Setup](#installation--setup)
+- [Installation & Setup](#installation&setup)
 - [Usage](#usage)
 - [Parameters](#parameters)
 - [Algorithms](#algorithms)
@@ -15,35 +17,35 @@ It prints the result of each hash for each file (unless the '-Quiet' switch is u
 
 ## Installation & Setup
 
-To clone and use this function, install & use Git. From PowerShell:
+To clone and use this repository, [install](https://github.com/git-guides/install-git) & use Git. From PowerShell:
 
 ```
 # Clone this repository
-PS > git clone https://github.com/turtlshell/Compare-FileHash.git
+PS > git clone https://github.com/turtlshell/Compare-FileHash
 
 # Extract the archive
-PS > Expand-Archive Compare-FileHash.zip
+PS > Expand-Archive Compare-FileHash-main.zip
 
 # CD into the repository
-PS > cd Compare-FileHash
+PS > cd Compare-FileHash-main
 
 # (Optional, depending on your security settings) Set Execution Policy
 PS > Set-ExecutionPolicy Bypass -Scope Process
 
-# Import the function
+# Import the cmdlet
 PS > . .\Compare-FileHash.ps1
 ```
 
 ## Usage
 
-Here's how to use the Compare-FileHash function:
+Here's how to use the Compare-FileHash cmdlet:
 
-1. Import the function into your PowerShell session:
+1. Import the cmdlet into your PowerShell session:
 ```
 . .\Compare-FileHash.ps1
 ```
 
-2. Use the function:
+2. Use the cmdlet (examples):
 
 - Compare SHA512 hashes of two files:
 ```
@@ -55,9 +57,9 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 ```
 
-- Compare SHA512 hashes of two files, and return 'MATCH' on the first algorithm match, skipping subsequent algorithms:
+- Compare all algorithms' hashes of two files, and return 'MATCH' on the first algorithm match, skipping subsequent algorithms:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick -Algorithm All
 ```
 
 - Compare the specified hashing algorithms of two files:
@@ -95,7 +97,7 @@ Compare-FileHash supports all algorithms which are supported by the native cmdle
 
 See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.3#parameters) for more info.
 
-\* Please note that these hashes are now considered insecure, and are vulnerable to certain attacks. If you're dealing with something sensitive or mission critical, use SHA256 or above.
+\* Please note that these hashes are now considered insecure, and are vulnerable to certain attacks. If you're dealing with something sensitive or mission critical, consider using SHA256 or above.
 
 ## License
 
@@ -103,9 +105,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ## Contribution
 
-Contributions and issues are welcome. I may consider feature requests if I like your idea and I feel it has a strong use-case. Feel free to check [issues page](https://github.com/turtlshell/Compare-FileHash/issues) if you want to contribute.
-
-## Show your support
+Contributions and issues are welcome. I will consider feature requests if I like your idea and I feel it has a strong use-case. Feel free to check the [issues page](https://github.com/turtlshell/Compare-FileHash/issues) if you want to contribute.
 
 Give a ⭐️ if you found this useful!
 

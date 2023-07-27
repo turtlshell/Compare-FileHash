@@ -8,9 +8,9 @@
 
 A native PowerShell(5+) cmdlet which can be used to compare the hash values of a list of files, against each other or an expected hash outcome, using various hashing algorithms. 
 
-SHA512 is used by default, but you may specify which algorithm(s) you want to use.
+SHA512 is used by default, but you may specify which algorithm(s) you wish to use.
 
-Compare-FileHash prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or the first one, if using the '-Fast' switch), it will return 'MATCH'. If any hash does not match, it will return 'MISMATCH'.
+Compare-FileHash prints the result of each hash for each file (unless '-Quiet' is passed), and if all algorithms' hashes match (or the first, if '-Fast' is passed), it will return 'MATCH'. If any hash does not match, it will return 'MISMATCH'.
 
 ## Table of Contents 🗂️
 

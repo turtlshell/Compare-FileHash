@@ -16,7 +16,7 @@ The cmdlet prints the result of each hash for each file (unless the '-Quiet' swi
 
 - [Installation & Setup](#installation)
 - [Usage](#usage)
-- [Parameters](parameters)
+- [Parameters](#parameters)
 - [Algorithms](#algorithms)
 - [License](#license)
 - [Contribution](#contribution)

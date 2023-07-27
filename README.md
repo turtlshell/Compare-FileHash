@@ -10,7 +10,7 @@ A native PowerShell(5+) cmdlet which can be used to compare the hash values of a
 
 SHA512 is used by default, but you may specify which algorithm(s) you want to use.
 
-The cmdlet prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or if one algorithm's hashes match, using the '-Fast' switch), it will return 'MATCH'. If any hash does not match, it will return 'MISMATCH'.
+Compare-FileHash prints the result of each hash for each file (unless the '-Quiet' switch is used), and if all algorithms' hashes match (or the first one, if using the '-Fast' switch), it will return 'MATCH'. If any hash does not match, it will return 'MISMATCH'.
 
 ## Table of Contents 🗂️
 
@@ -23,7 +23,7 @@ The cmdlet prints the result of each hash for each file (unless the '-Quiet' swi
 <a name="installation"></a>
 ## Installation & Setup 🔧
 
-Download the zip directly, or [install](https://github.com/git-guides/install-git) & use Git from PowerShell:
+[Download](https://github.com/turtlshell/Compare-FileHash/archive/refs/heads/main.zip) the zip directly, or [install](https://github.com/git-guides/install-git) & use Git from PowerShell:
 
 ```
 # Clone this repository
@@ -58,7 +58,7 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 ```
 
-- Compare all algorithms' hashes of two files, and return 'MATCH' on the first algorithm match, skipping subsequent algorithms:
+- Compare all algorithms' hashes of two files and accept the first hash match, skipping subsequent algorithms:
 ```
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 ```
@@ -68,7 +68,7 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
 ```
 
-- Compare the specified file's MD5 against the specified expected MD5:
+- Compare a file's MD5 against its expected MD5:
 ```
 Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
 ```
@@ -77,27 +77,27 @@ Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B20
 
 #### -Files (mandatory)
 
-The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied (unless '-Expected' is passed), however there is no upper limit.
+The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied (or one, if '-Expected' is passed), however there is no upper limit.
 
 #### -Algorithms (optional)
 
-Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of algorithms, separated by commas, which the Get-FileHash cmdlet supports. Passing "All" will run all algorithms, and if this parameter is not passed, it will default to SHA512.
+Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of [algorithms](#algorithms), separated by commas. Passing "All" will run all algorithms. When unspecified, SHA512 will be used.
 
 #### -Expected (optional)
 
-Allows you to specify the hash you are expecting, and compares the file(s) against that, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1, and limits '-Algorithms' to 1 type.
+Allows you to specify the hash you are expecting, and compares the file(s) against it, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1, and limits '-Algorithms' to 1 type.
 
 #### -Quiet (optional)
 
-Suppresses the individual hash values from being printed; only the final result ('MATCH' or 'MISMATCH') will be printed.
+Suppresses the individual hash values from being printed; only the result, ('MATCH' or 'MISMATCH'), will be printed.
 
 #### -Fast (optional)
 
-Returns 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
+Returns 'MATCH' if the first algorithm's hashes match, skipping the calculation of any subsequent hashes.
 <a name="algorithms"></a>
 ## Algorithms 🧮
 
-Compare-FileHash supports all algorithms which are supported by the native cmdlet Get-FileHash. As of right now, those are:
+Compare-FileHash supports all algorithms which are supported by Get-FileHash. As of right now, those are:
 
 - SHA512
 - SHA384
@@ -117,6 +117,6 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 Contributions and issues are welcome. I will consider feature requests if I like your idea and I feel it has a strong use-case. Feel free to check the [issues page](https://github.com/turtlshell/Compare-FileHash/issues) if you want to contribute.
 
-Give a ⭐️ if you found this useful!
+Drop a ⭐️ if you found this useful!
 
 This readme was last updated on July 27, 2023.

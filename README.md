@@ -44,34 +44,34 @@ PS > . .\Compare-FileHash.ps1
 
 1. Import the file into your PowerShell session:
 ```
-. .\Compare-FileHash.ps1
+PS > . .\Compare-FileHash.ps1
 ```
 
 2. Use the cmdlet (examples):
 
 - Compare SHA512 of two files:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
+PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
 ```
 
 - Compare SHA512 of multiple files, suppressing individual hash results:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
+PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 ```
 
 - Compare all algorithms' hashes of two files and accept the first hash match, skipping subsequent algorithms:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
+PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 ```
 
 - Compare the specified hashing algorithms of two files:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
+PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
 ```
 
 - Compare a file's MD5 against its expected MD5:
 ```
-Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
+PS > Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
 ```
 <a name="parameters"></a>
 ## Parameters ⚙️

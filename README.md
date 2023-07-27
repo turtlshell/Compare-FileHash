@@ -44,55 +44,55 @@ PS > . .\Compare-FileHash.ps1
 
 1. Import the file into your PowerShell session:
 ```
-PS > . .\Compare-FileHash.ps1
+. .\Compare-FileHash.ps1
 ```
 
 2. Use the cmdlet (examples):
 
 - Compare SHA512 of two files:
 ```
-PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
 ```
 
 - Compare SHA512 of multiple files, suppressing individual hash results:
 ```
-PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 ```
 
 - Compare all algorithms' hashes of two files and accept the first hash match, skipping subsequent algorithms:
 ```
-PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 ```
 
 - Compare the specified hashing algorithms of two files:
 ```
-PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
 ```
 
 - Compare a file's MD5 against its expected MD5:
 ```
-PS > Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
+Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
 ```
 <a name="parameters"></a>
 ## Parameters ⚙️
 
-#### -Files (mandatory)
+#### 📁 -Files (mandatory)
 
-The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied (or one, if '-Expected' is passed), however there is no upper limit.
+The list of file paths, separated by commas, from which to compare the hashes. A minimum of two paths must be supplied (or one, if '-Expected' is passed), however there is no upper limit.
 
-#### -Algorithms (optional)
+#### 🧮 -Algorithms (optional)
 
 Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of [algorithms](#algorithms), separated by commas. Passing "All" will run all algorithms. When unspecified, SHA512 will be used.
 
-#### -Expected (optional)
+#### ✔️ -Expected (optional)
 
 Allows you to specify the hash you are expecting, and compares the file(s) against it, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1, and limits '-Algorithms' to 1 type.
 
-#### -Quiet (optional)
+#### 🔇 -Quiet (optional)
 
 Suppresses the individual hash values from being printed; only the result, ('MATCH' or 'MISMATCH'), will be printed.
 
-#### -Fast (optional)
+#### ⚡ -Fast (optional)
 
 Returns 'MATCH' if the first algorithm's hashes match, skipping the calculation of any subsequent hashes.
 <a name="algorithms"></a>
@@ -116,7 +116,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 <a name="contribution"></a>
 ## Contribution
 
-Contributions and issues are welcome. I will consider feature requests if I like your idea and I feel it has a strong use-case. Feel free to check the [issues page](https://github.com/turtlshell/Compare-FileHash/issues) if you want to contribute.
+Contributions/issues are welcome. I will consider feature requests if I like your idea and I feel it has a strong use-case. Feel free to check the [issues page](https://github.com/turtlshell/Compare-FileHash/issues) if you want to contribute.
 
 Drop a ⭐️ if you found this useful!
 

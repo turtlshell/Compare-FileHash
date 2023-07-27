@@ -73,6 +73,11 @@ PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA2
 ```
 PS > Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
 ```
+
+- Compare a file's SHA1 against its expected SHA1, automatically detecting algorithm by hash length:
+```
+PS > Compare-FileHash -Files 'C:\file1.txt' -Expected DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
+```
 <a name="parameters"></a>
 ## Parameters ⚙️
 

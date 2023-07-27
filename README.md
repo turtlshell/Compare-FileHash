@@ -23,7 +23,7 @@ The cmdlet prints the result of each hash for each file (unless the '-Quiet' swi
 <a name="installation"></a>
 ## Installation & Setup 🔧
 
-Download the zip directly, or [install](https://github.com/git-guides/install-git) & use Git. From PowerShell:
+Download the zip directly, or [install](https://github.com/git-guides/install-git) & use Git from PowerShell:
 
 ```
 # Clone this repository

@@ -102,11 +102,11 @@ function Compare-FileHash {
 		}
 	}
 	
-	# Add each file's path to a hashtable which contains the path and its hashes from specified algorithms
-	foreach ($file in $Files) { [array]$table += @{ "Path" = $file } }
-
 	# Late return to allow all path issues to be stated before return
 	if ($invalidPath) { return }
+	
+	# Add each file's path to a hashtable which contains the path and its hashes from specified algorithms
+	foreach ($file in $Files) { [array]$table += @{ "Path" = $file } }
 
 	# Ensure only 1 algorithm is selected for use when -Expected is specified
 	if($Expected -and ($Algorithm.Count -gt 1) -or $Algorithm -eq "All") {

@@ -86,7 +86,7 @@ function Compare-FileHash {
 	# Oneshot variable on script scope to ensure column headers of Get-FileHash table are only printed once
 	$script:tableHeaders = $false
 
-	# Lengths of each supported hash type, to validate length of hash passed with '-Expected'
+	# Lengths of each supported hash type, to validate length of hash passed with '-Expected'. No duplicate lengths allowed, would break '-Expected' algorithm detection.
 	$hashLengths = @{ "MD5" = 32 ; "SHA1" = 40 ; "SHA256" = 64 ; "SHA384" = 96 ; "SHA512" = 128 }
 
 	# Ensure at least two file paths have been provided
@@ -107,6 +107,16 @@ function Compare-FileHash {
 
 	# Allow all path issues to be printed prior to return
 	if ($invalidPath) { return }
+
+	# Automatically detect '-Expected' input hash type based on length
+	if ($Expected) {
+		foreach ($key in $hashLengths.Keys) {
+			if ($hashLengths[$key] -eq $Expected.Length) {
+				$Algorithms = $key
+				break
+			}
+		}
+	}
 
 	# Add each file's path to a hashtable which contains the path and its hashes from specified algorithms
 	foreach ($file in $Files) { [array]$table += @{ "Path" = $file } }
@@ -168,7 +178,7 @@ function Compare-FileHash {
 		}
 		return $true
 	}
-
+ 
 	# Run Compare-Hashes with each algorithm
 	foreach ($hashType in $algorithms) {
 

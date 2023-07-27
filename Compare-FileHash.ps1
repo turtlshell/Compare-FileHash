@@ -58,10 +58,10 @@ In this example, the cmdlet will compare the SHA1, MD5, and SHA384 hashes of fil
 If any of the hashes do not match, the rest of the algorithms will not be computed, and 'MISMATCH' will be printed.
 
 .EXAMPLE
-Compare-FileHash -Files 'C:\file1.txt' -Algorithms SHA256 -Expected your_hash_here
+Compare-FileHash -Files 'C:\file1.txt' -Expected D41D8CD98F00B204E9800998ECF8427E
 
-In this example, the cmdlet will compare file1.txt to an expected SHA256 hash and return 'MATCH EXPECTED'
-if its hash matches, or 'MISMATCH, expected your_hash_here' if its hash does not match.
+In this example, the cmdlet will automatically detect that the input hash is MD5, based on its length
+(in this case, 32 characters), and compare file1.txt to that expected hash.
 #>
 
 function Compare-FileHash {

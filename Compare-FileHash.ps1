@@ -5,8 +5,8 @@
 Compares the hashes of a list of files using various algorithms.
 
 .DESCRIPTION
-The Compare-FileHash function will compare the hash values of a list of files. The files are 
-passed to the function as a parameter, separated by commas. The function will use SHA512,
+The Compare-FileHash cmdlet will compare the hash values of a list of files. The files are 
+passed to the cmdlet as a parameter, separated by commas. The cmdlet will use SHA512,
 or a list of user-specified algorithms, to perform the comparison. It will print the result
 of each hash comparison unless the -Quiet switch is passed. Finally, it will return either
 'MATCH' if all hash values matched or 'MISMATCH' if one of the hash values did not match.
@@ -20,41 +20,52 @@ Determines which algorithm(s) are used to compute the specified files' hashes.
 You may pass any number of algorithms, separated by commas, which the Get-FileHash cmdlet supports.
 Passing "All" will run all algorithms, and if this parameter is not passed, it will default to SHA512.
 
+.PARAMETER Expected
+Allows user to specify the hash they are expecting, and compares the file(s) against that,
+rather than against each other. Passing this switch reduces the minimum '-Files' limit
+from 2 to 1, and limits '-Algorithm' to 1 type.
+
 .PARAMETER Quiet
 Suppresses the individual hash values from being printed;
 only the final result ('MATCH' or 'MISMATCH') will be printed.
 
-.PARAMETER Quick
+.PARAMETER Fast
 Returns 'MATCH' if the first computed algorithm's hashes match.
-This skips the calculation and comparison of any subsequent
-algorithm's hashes if they are not needed.
+This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
 
 .EXAMPLE
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt'
 
-In this example, the function will compare the SHA512 hashes of file1.txt and file2.txt and 
+In this example, the cmdlet will compare the SHA512 hashes of file1.txt and file2.txt and 
 print the hash values of each file along with the final comparison result.
 
 .EXAMPLE
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 
-In this example, the function will compare the SHA512 hashes of file1.txt, file2.txt and file3.txt,
+In this example, the cmdlet will compare the SHA512 hashes of file1.txt, file2.txt and file3.txt,
 and only print the final comparison result ('MATCH' or 'MISMATCH') without any further verbosity.
 
 .EXAMPLE
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Quick -Algorithm All
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithm All
 
-In this example, the function will start comparing all algorithms' hashes of file1.txt and file2.txt and
+In this example, the cmdlet will start comparing all algorithms' hashes of file1.txt and file2.txt and
 will return 'MATCH' immediately if the first algorithm matches, skipping the other algorithms.
 
 .EXAMPLE
 Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,MD5,SHA384
 
-In this example, the function will compare the SHA1, MD5, and SHA384 hashes of file1.txt and file2.txt.
+In this example, the cmdlet will compare the SHA1, MD5, and SHA384 hashes of file1.txt and file2.txt.
 If any of the hashes do not match, the rest of the algorithms will not be computed, and 'MISMATCH' will be printed.
+
+.EXAMPLE
+Compare-FileHash -Files 'C:\file1.txt' -Algorithm SHA256 -Expected your_hash_here
+
+In this example, the cmdlet will compare file1.txt to an expected SHA256 hash and return 'MATCH EXPECTED'
+if its hash matches, or 'MISMATCH, expected your_hash_here' if its hash does not match.
 #>
 
 function Compare-FileHash {
+	[CmdletBinding()]
 	param ( 
 		[Parameter(Mandatory=$true)]
 		[string[]]$Files,
@@ -64,17 +75,19 @@ function Compare-FileHash {
 		[string[]]$Algorithm = "SHA512",
 
 		[Parameter(Mandatory=$false)]
+		[string]$Expected,
+
+		[Parameter(Mandatory=$false)]
 		[switch]$Quiet = $false,
 
 		[Parameter(Mandatory=$false)]
-		[switch]$Quick = $false
+		[switch]$Fast = $false
 	)
-
 	# Oneshot variable on script scope to ensure column headers of Get-FileHash table are only printed once
 	$script:tableHeaders = $false
 
 	# Ensure at least two file paths have been provided
-	if ($Files.Count -lt 2) { Write-Host -ForegroundColor Red "At least two file paths must be provided." ; break }
+	if ($Files.Count -lt 2 -and -not ($Expected)) { Write-Error "When '-Expected' is not specified, at least two file paths must be provided." ; return }
 
 	# Add each file path to a hashtable so each algorithm's hash can be keyed and accessed flexibly
 	foreach ($file in $Files) { [array]$table += @{ "Path" = $file } }
@@ -84,47 +97,95 @@ function Compare-FileHash {
 
 		if (-not (Test-Path $item["Path"])) {
 			$invalidPath = $true
-			Write-Host -ForegroundColor Red "Invalid Path: $($item["Path"])"
+			Write-Error "Invalid Path: $($item["Path"])"
 
 		} elseif (-not (Test-Path $item["Path"] -PathType Leaf)) {
 			$invalidPath = $true
-			Write-Host -ForegroundColor Red "Path is directory, not file: $($item["Path"])"
+			Write-Error "Path is directory, not file: $($item["Path"])"
 		}
 	}
 
-	if ($invalidPath) { break }
+	# Late return to allow all path issues to be stated before return
+	if ($invalidPath) { return }
+
+	# Ensure only 1 algorithm is selected for use when -Expected is specified
+	if($Expected -and ($Algorithm.Count -gt 1) -or $Algorithm -eq "All") {
+		Write-Error "When '-Expected' is specified, '-Algorithm' is limited to one type."
+		return
+	}
 
 	# If user's algorithm selection contains "All", run all algorithms, else just run what user specifies
 	$algorithms = if ($Algorithm -contains "All") { @("SHA512","SHA384","SHA256","SHA1","MD5") } else { $Algorithm }
 
-	function Compare-Hashes {
-		param ($alg)
+	# Evaluate $Expected length to ensure proper hash length parity
+	if ($Expected) {
+
+		$hashLengths = @{ "MD5" = 32 ; "SHA1" = 40 ; "SHA256" = 64 ; "SHA384" = 96 ; "SHA512" = 128 }
+
+		switch ($Algorithm) {
+			{ $Algorithm -in $hashLengths.Keys } {
+				if ($Expected.Length -notin $hashLengths[$Algorithm]) {
+					Write-Error "$Algorithm hashes should be $($hashLengths[$Algorithm]) characters long. Supplied hash is $($Expected.Length) characters long."
+					return
+				}
+			}
+		}
+	}
+
+	function Get-Hashes {
+		param (
+			[Parameter(Mandatory=$true)]
+			[string]$Type
+		)
 
 		# Compute hash for supplied algorithm, store result in relevant hashtable
 		foreach ($number in 0..($Files.Count-1)) {
-			Write-Progress -Activity "Computing hash:" -Status "$($table[$number]["Path"]) | $alg"
-			$table[$number][$alg] = Get-FileHash -Path $table[$number]["Path"] -Algorithm $alg
+			Write-Progress -Activity "Computing hash:" -Status "$($table[$number]["Path"]) | $Type"
+			$table[$number][$Type] = Get-FileHash -Path $table[$number]["Path"] -Algorithm $Type
 
 			# Only print table headers once, for the first hash
 			if ((-not ($Quiet)) -and (-not ($tableHeaders))) {
-				Write-Output $table[$number][$alg] | Out-Host
+				Write-Output $table[$number][$Type] | Out-Host
 				$script:tableHeaders = $true
 
-			} elseif (-not ($Quiet)) { Write-Output $table[$number][$alg] | Format-Table -HideTableHeaders | Out-Host }
+			} elseif (-not ($Quiet)) { Write-Output $table[$number][$Type] | Format-Table -HideTableHeaders | Out-Host }
 		}
-		# Compare results (all items to first item), return $true if mismatch
-		foreach ($item in $table[1..($Files.Count-1)]) {
-			if ($table[0][$alg].Hash -ne $item[$alg].Hash) { return $true }
+	}
+
+	function Compare-Hashes {
+		param (
+			[Parameter(Mandatory=$true)]
+			[string]$Type
+		)
+
+		# Compare $Expected to each item, return $true if mismatch
+		if ($Expected) {
+			foreach ($item in $table[0..($Files.Count)]) {
+				if ($Expected -ne $item[$Type].Hash) { return $true }
+			}
+		} else {
+			# Compare results (all items to first item), return $true if mismatch
+			foreach ($item in $table[1..($Files.Count-1)]) {
+				if ($table[0][$Type].Hash -ne $item[$Type].Hash) { return $true }
+			}
 		}
 		return $false
 	}
 
 	# Run Compare-Hashes with each algorithm
-	foreach ($alg in $algorithms) {
-		$mismatch = Compare-Hashes -alg $alg
-		# If a mismatch is detected, or a match is detected and '-Quick' is specified, skip to results
-		if ($mismatch) { break } elseif ($Quick) { break }
+	foreach ($hashType in $algorithms) {
+		Get-Hashes -Type $hashType
+		$mismatch = Compare-Hashes -Type $hashType
+		# If a mismatch is detected, or a match is detected and '-Fast' is specified, skip to results
+		if ($mismatch) { break } elseif ($Fast) { break }
 	}
+
 	# Print match results
-	if ($mismatch) { Write-Host -ForegroundColor Red "MISMATCH"} else { Write-Host -ForegroundColor Green "MATCH" }
+	if ($mismatch) {
+		Write-Host -NoNewline -ForegroundColor Red "MISMATCH"
+		if ($Expected) { Write-Host -ForegroundColor Red ", expected $Expected" }
+	} else {
+		Write-Host -NoNewline -ForegroundColor Green "MATCH"
+		if ($Expected) { Write-Host -ForegroundColor Green " EXPECTED" }
+	}
 }

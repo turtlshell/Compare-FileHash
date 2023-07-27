@@ -82,7 +82,7 @@ The list of file paths, separated by commas, from which to compare the hashes. A
 
 #### 🧮 -Algorithms (optional)
 
-Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of [algorithms](#algorithms), separated by commas. Passing "All" will run all algorithms. When unspecified, SHA512 will be used.
+Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of [algorithms](#algorithms), separated by commas. Passing 'All' will run all algorithms. When unspecified, SHA512 will be used.
 
 #### ✔️ -Expected (optional)
 

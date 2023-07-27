@@ -89,21 +89,21 @@ function Compare-FileHash {
 	# Ensure at least two file paths have been provided
 	if ($Files.Count -lt 2 -and -not ($Expected)) { Write-Error "When '-Expected' is not specified, at least two file paths must be provided." ; return }
 
-	# Add each file path to a hashtable so each algorithm's hash can be keyed and accessed flexibly
-	foreach ($file in $Files) { [array]$table += @{ "Path" = $file } }
-
 	# Ensure supplied paths exist, and are files, not directories
-	foreach ($item in $table) {
+	foreach ($file in $Files) {
 
-		if (-not (Test-Path $item["Path"])) {
+		if (-not (Test-Path $file)) {
 			$invalidPath = $true
-			Write-Error "Invalid Path: $($item["Path"])"
+			Write-Error "Invalid Path: $file"
 
-		} elseif (-not (Test-Path $item["Path"] -PathType Leaf)) {
+		} elseif (-not (Test-Path $file -PathType Leaf)) {
 			$invalidPath = $true
-			Write-Error "Path is directory, not file: $($item["Path"])"
+			Write-Error "Path is directory, not file: $file"
 		}
 	}
+	
+	# Add each file's path to a hashtable which contains the path and its hashes from specified algorithms
+	foreach ($file in $Files) { [array]$table += @{ "Path" = $file } }
 
 	# Late return to allow all path issues to be stated before return
 	if ($invalidPath) { return }

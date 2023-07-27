@@ -69,7 +69,7 @@ PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
 ```
 
-- Compare a file's SHA1 against its expected SHA1, automatically detecting algorithm by hash length:
+- Compare a file's SHA1 against its expected SHA1, automatically detecting desired algorithm by hash length:
 ```
 PS > Compare-FileHash -Files 'C:\file1.txt' -Expected DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
 ```

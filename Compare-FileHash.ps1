@@ -86,7 +86,7 @@ function Compare-FileHash {
 	# Oneshot variable on script scope to ensure column headers of Get-FileHash table are only printed once
 	$script:tableHeaders = $false
 
-	# Lengths of each supported hash type to validate length of hash passed with '-Expected'
+	# Lengths of each supported hash type, to validate length of hash passed with '-Expected'
 	$hashLengths = @{ "MD5" = 32 ; "SHA1" = 40 ; "SHA256" = 64 ; "SHA384" = 96 ; "SHA512" = 128 }
 
 	# Ensure at least two file paths have been provided
@@ -105,7 +105,7 @@ function Compare-FileHash {
 		}
 	}
 
-	# Late return to allow all path issues to be stated before return
+	# Allow all path issues to be printed prior to return
 	if ($invalidPath) { return }
 
 	# Add each file's path to a hashtable which contains the path and its hashes from specified algorithms
@@ -140,6 +140,7 @@ function Compare-FileHash {
 
 		# Compute hash for supplied algorithm, store result in relevant hashtable
 		foreach ($number in 0..($Files.Count-1)) {
+
 			Write-Progress -Activity "Computing hash:" -Status "$($table[$number]["Path"]) | $Type"
 			$table[$number][$Type] = Get-FileHash -Path $table[$number]["Path"] -Algorithm $Type
 
@@ -158,9 +159,10 @@ function Compare-FileHash {
 			[string]$Type
 		)
 
-		# Compare all items to $Expected, or all items to first item, return $true if mismatch
+		# Set item to compare to - if '-Expected' is passed, use it, else use first item
 		$source = if ($Expected) { $Expected ; $i = 0 } else { $table[0][$Type].Hash ; $i = 1 }
 
+		# Compare all items to $source, return $false if mismatch
 		foreach ($item in $table[$i..($Files.Count - $i)]) {
 			if ($source -ne $item[$Type].Hash) { return $false }
 		}
@@ -169,15 +171,16 @@ function Compare-FileHash {
 
 	# Run Compare-Hashes with each algorithm
 	foreach ($hashType in $algorithms) {
+
 		Get-Hashes -Type $hashType
 		$match = Compare-Hashes -Type $hashType
+
 		# If a mismatch is detected, or a match is detected and '-Fast' is specified, skip to results
 		if (-not ($match)) { break } elseif ($Fast) { break }
 	}
 
 	# Print match results
 	if ($match) {
-		Write-Host $match
 		Write-Host -NoNewline -ForegroundColor Green "MATCH"
 		if ($Expected) { Write-Host -ForegroundColor Green " EXPECTED" }
 	} else {

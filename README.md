@@ -14,13 +14,13 @@ The cmdlet prints the result of each hash for each file (unless the '-Quiet' swi
 
 ## Table of Contents 🗂️
 
-- [Installation & Setup](#installation--setup-)
-- [Usage](#usage-)
-- [Parameters](parameters-)
-- [Algorithms](#algorithms-)
+- [Installation & Setup](#installation)
+- [Usage](#usage)
+- [Parameters](parameters)
+- [Algorithms](#algorithms)
 - [License](#license)
 - [Contribution](#contribution)
-
+<a name="installation"></a>
 ## Installation & Setup 🔧
 
 Download the zip directly, or [install](https://github.com/git-guides/install-git) & use Git. From PowerShell:
@@ -32,13 +32,13 @@ PS > git clone https://github.com/turtlshell/Compare-FileHash.git
 # CD into the repository directory
 PS > cd Compare-FileHash
 
-# (Optional, depending on your security settings) Set Execution Policy
+# (Optional, depending on your security settings) Set execution policy, to allow this script to run
 PS > Set-ExecutionPolicy Bypass -Scope Process
 
 # Import the file
 PS > . .\Compare-FileHash.ps1
 ```
-
+<a name="usage"></a>
 ## Usage 💡
 
 1. Import the file into your PowerShell session:
@@ -72,7 +72,7 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,SHA256,SHA
 ```
 Compare-FileHash -Files 'C:\file1.txt' -Algorithm MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
 ```
-
+<a name="parameters"></a>
 ## Parameters ⚙️
 
 #### -Files (mandatory)
@@ -94,7 +94,7 @@ Suppresses the individual hash values from being printed; only the final result 
 #### -Fast (optional)
 
 Returns 'MATCH' if the first computed algorithm's hashes match. This skips the calculation and comparison of any subsequent algorithm's hashes if they are not needed.
-
+<a name="algorithms"></a>
 ## Algorithms 🧮
 
 Compare-FileHash supports all algorithms which are supported by the native cmdlet Get-FileHash. As of right now, those are:
@@ -108,11 +108,11 @@ Compare-FileHash supports all algorithms which are supported by the native cmdle
 See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash#parameters) for more info.
 
 \* Please note that these hashes are considered [insecure](https://en.wikipedia.org/wiki/SHA-1#Comparison_of_SHA_functions), and are vulnerable to certain attacks. If you're dealing with something sensitive, consider using SHA256 or above.
-
+<a name="license"></a>
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
-
+<a name="contribution"></a>
 ## Contribution
 
 Contributions and issues are welcome. I will consider feature requests if I like your idea and I feel it has a strong use-case. Feel free to check the [issues page](https://github.com/turtlshell/Compare-FileHash/issues) if you want to contribute.

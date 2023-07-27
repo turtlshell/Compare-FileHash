@@ -159,7 +159,7 @@ function Compare-FileHash {
 			[string]$Type
 		)
 
-		# Set item to compare to - if '-Expected' is passed, use it, else use first item
+		# Set item to compare to; if '-Expected' is passed, use it, else use first item
 		$source = if ($Expected) { $Expected ; $i = 0 } else { $table[0][$Type].Hash ; $i = 1 }
 
 		# Compare all items to $source, return $false if mismatch

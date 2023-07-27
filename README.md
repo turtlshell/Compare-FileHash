@@ -60,17 +60,17 @@ Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 
 - Compare all algorithms' hashes of two files, and return 'MATCH' on the first algorithm match, skipping subsequent algorithms:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithm All
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 ```
 
 - Compare the specified hashing algorithms of two files:
 ```
-Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithm SHA1,SHA256,SHA384
+Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
 ```
 
 - Compare the specified file's MD5 against the specified expected MD5:
 ```
-Compare-FileHash -Files 'C:\file1.txt' -Algorithm MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
+Compare-FileHash -Files 'C:\file1.txt' -Algorithms MD5 -Expected D41D8CD98F00B204E9800998ECF8427E
 ```
 <a name="parameters"></a>
 ## Parameters ⚙️
@@ -79,13 +79,13 @@ Compare-FileHash -Files 'C:\file1.txt' -Algorithm MD5 -Expected D41D8CD98F00B204
 
 The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied (unless '-Expected' is passed), however there is no upper limit.
 
-#### -Algorithm (optional)
+#### -Algorithms (optional)
 
 Determines which algorithm(s) are used to compute the specified files' hashes. You may pass any number of algorithms, separated by commas, which the Get-FileHash cmdlet supports. Passing "All" will run all algorithms, and if this parameter is not passed, it will default to SHA512.
 
 #### -Expected (optional)
 
-Allows you to specify the hash you are expecting, and compares the file(s) against that, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1, and limits '-Algorithm' to 1 type.
+Allows you to specify the hash you are expecting, and compares the file(s) against that, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1, and limits '-Algorithms' to 1 type.
 
 #### -Quiet (optional)
 

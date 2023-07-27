@@ -77,7 +77,7 @@ Compare-FileHash -Files 'C:\file1.txt' -Algorithm MD5 -Expected D41D8CD98F00B204
 
 #### -Files (mandatory)
 
-The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied, however there is no upper limit.
+The list of file paths, separated by commas, to compare the hashes of. A minimum of two paths must be supplied (unless '-Expected' is passed), however there is no upper limit.
 
 #### -Algorithm (optional)
 

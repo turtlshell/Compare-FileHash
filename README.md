@@ -48,7 +48,7 @@ PS > . .\Compare-FileHash.ps1
 <a name="usage"></a>
 ## Usage 💡
 
-1. Import the file into your PowerShell session (If you installed using the manual method):
+1. Import the file into your PowerShell session (only necessary if you installed using the manual method):
 ```
 PS > . .\Compare-FileHash.ps1
 ```
@@ -70,12 +70,12 @@ PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt','C:\file3.txt' -Quiet
 PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Fast -Algorithms All
 ```
 
-- Compare the specified hashing algorithms of two files:
+- Compare the specified algorithm's hashes of two files:
 ```
 PS > Compare-FileHash -Files 'C:\file1.txt','C:\file2.txt' -Algorithms SHA1,SHA256,SHA384
 ```
 
-- Compare a file's SHA1 against its expected SHA1, automatically detecting desired algorithm by hash length:
+- Compare a file's SHA1 against its expected SHA1, automatically deriving desired algorithm from hash length:
 ```
 PS > Compare-FileHash -Files 'C:\file1.txt' -Expected DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
 ```
@@ -114,7 +114,7 @@ Compare-FileHash supports all algorithms which are supported by Get-FileHash. As
 
 See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash#parameters) for more info.
 
-<sup>² Please note that these hashes are considered [insecure](https://en.wikipedia.org/wiki/SHA-1#Comparison_of_SHA_functions), and are vulnerable to certain attacks. If you're dealing with something sensitive, consider using SHA256 or above.</sup>
+<sup>² Please note that these algorithms are considered [insecure](https://en.wikipedia.org/wiki/SHA-1#Comparison_of_SHA_functions). If you're dealing with something sensitive, consider using SHA256 or above.</sup>
 <a name="license"></a>
 ## License
 

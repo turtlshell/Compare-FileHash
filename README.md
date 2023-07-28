@@ -1,13 +1,12 @@
 <a name="top"></a>
-# Compare-FileHash
-
 <p align="center">
+	<img src="PLACEHOLDER"/>
 	<a href="LICENSE"><img src="https://badgen.net/static/license/GPL-3.0?icon=github"/></a>
-	<img src="https://badgen.net/static/PowerShell/5.0+/orange?icon=terminal"/>
+	<img src="https://badgen.net/static/PowerShell/3.0+/orange?icon=terminal"/>
 	<img src="https://badgen.net/static/.NET/None/green?icon=windows"/>
 </p>
 
-A native PowerShell(5+) cmdlet which can be used to compare the hash values of a list of files, against each other or an expected hash outcome, using various hashing algorithms. 
+A native PowerShell (3.0+) cmdlet which can be used to compare the hash values of a list of files, against each other or an expected hash outcome, using various hashing algorithms. 
 
 SHA512 is used by default, but you may specify which algorithm(s) you wish to use.
 

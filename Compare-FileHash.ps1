@@ -138,12 +138,6 @@ function Compare-FileHash {
 	# If user's algorithm selection contains "All", run all algorithms, else just run what user specifies
 	$algorithms = if ($Algorithms -contains "All") { @("SHA512","SHA384","SHA256","SHA1","MD5") } else { $Algorithms }
 
-	# Evaluate $Expected length to ensure proper hash length parity
-	if ($Expected -and $hashLengths[$Algorithms] -ne $Expected.Length) {
-		Write-Error "$Algorithms hashes should be $($hashLengths[$Algorithms]) characters long. Supplied hash is $($Expected.Length) characters long."
-		return
-	}
-
 	function Get-Hashes {
 		param (
 			[Parameter(Mandatory=$true)]

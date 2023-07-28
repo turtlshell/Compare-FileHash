@@ -6,7 +6,7 @@
 	<img src="https://badgen.net/static/.NET/None/green?icon=windows"/>
 </p>
 
-A native PowerShell (3.0+) cmdlet which can be used to compare the hash values of a list of files, against each other or an expected hash outcome, using various hashing algorithms. 
+Compare-FileHash is a native PowerShell (3.0+) cmdlet which can be used to compare the hash values of a list of files, against each other or an expected hash outcome, using various hashing algorithms. 
 
 SHA512 is used by default, but you may specify which algorithm(s) you wish to use.
 
@@ -23,8 +23,12 @@ Compare-FileHash prints the result of each hash for each file (unless '-Quiet' i
 <a name="installation"></a>
 ## Installation & Setup 🔧
 
-[Download](https://github.com/turtlshell/Compare-FileHash/archive/refs/heads/main.zip) the zip directly, or [install](https://github.com/git-guides/install-git) & use Git from PowerShell:
+Automatic, from [PowerShell Gallery](https://www.powershellgallery.com/packages/Compare-FileHash/) (recommended):
+```
+PS > Install-Module -Name Compare-FileHash
+```
 
+Manual¹: [Download](https://github.com/turtlshell/Compare-FileHash/archive/refs/heads/main.zip) the zip directly, or [install](https://github.com/git-guides/install-git) & use Git from PowerShell:
 ```
 # Clone this repository
 PS > git clone https://github.com/turtlshell/Compare-FileHash.git
@@ -32,16 +36,17 @@ PS > git clone https://github.com/turtlshell/Compare-FileHash.git
 # CD into the repository directory
 PS > cd Compare-FileHash
 
-# (Optional, depending on your security settings) Set execution policy, to allow this script to run
+# (Optional, depending on your security settings) Set execution policy to allow this script to run
 PS > Set-ExecutionPolicy Bypass -Scope Process
 
 # Import the file
 PS > . .\Compare-FileHash.ps1
 ```
+<sup>¹ Installing using this method will require you to manually dot source (. .\\) the file each time you wish to use the module</sup>
 <a name="usage"></a>
 ## Usage 💡
 
-1. Import the file into your PowerShell session:
+1. Import the file into your PowerShell session (If you installed using the manual method):
 ```
 PS > . .\Compare-FileHash.ps1
 ```
@@ -102,12 +107,12 @@ Compare-FileHash supports all algorithms which are supported by Get-FileHash. As
 - SHA512
 - SHA384
 - SHA256
-- [SHA1](https://en.wikipedia.org/wiki/SHA-1#Attacks)*
-- [MD5](https://en.wikipedia.org/wiki/MD5#Security)*
+- [SHA1](https://en.wikipedia.org/wiki/SHA-1#Attacks)²
+- [MD5](https://en.wikipedia.org/wiki/MD5#Security)²
 
 See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash#parameters) for more info.
 
-\* Please note that these hashes are considered [insecure](https://en.wikipedia.org/wiki/SHA-1#Comparison_of_SHA_functions), and are vulnerable to certain attacks. If you're dealing with something sensitive, consider using SHA256 or above.
+<sup>² Please note that these hashes are considered [insecure](https://en.wikipedia.org/wiki/SHA-1#Comparison_of_SHA_functions), and are vulnerable to certain attacks. If you're dealing with something sensitive, consider using SHA256 or above.</sup>
 <a name="license"></a>
 ## License
 

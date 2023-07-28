@@ -1,4 +1,4 @@
-#Requires -Version 5
+#Requires -Version 3
 
 <#
 .SYNOPSIS
@@ -110,11 +110,19 @@ function Compare-FileHash {
 
 	# Automatically detect '-Expected' input hash type based on length
 	if ($Expected) {
+
+		$Algorithms = @()
+
 		foreach ($key in $hashLengths.Keys) {
 			if ($hashLengths[$key] -eq $Expected.Length) {
 				$Algorithms = $key
 				break
 			}
+		}
+		if (-not ($Algorithms)) {
+			Write-Error "Invalid length of '-Expected' hash ($($Expected.Length) characters). Supported hashes/lengths are as follows:`n`n"
+			$hashLengths.Keys | Sort-Object | ForEach-Object { "$_ - $($hashLengths[$_])" } | Write-Host -ForegroundColor Red
+			return
 		}
 	}
 
@@ -131,15 +139,9 @@ function Compare-FileHash {
 	$algorithms = if ($Algorithms -contains "All") { @("SHA512","SHA384","SHA256","SHA1","MD5") } else { $Algorithms }
 
 	# Evaluate $Expected length to ensure proper hash length parity
-	if ($Expected) {
-		switch ($Algorithms) {
-			{ $Algorithms -in $hashLengths.Keys } {
-				if ($Expected.Length -notin $hashLengths[$Algorithms]) {
-					Write-Error "$Algorithms hashes should be $($hashLengths[$Algorithms]) characters long. Supplied hash is $($Expected.Length) characters long."
-					return
-				}
-			}
-		}
+	if ($Expected -and $hashLengths[$Algorithms] -ne $Expected.Length) {
+		Write-Error "$Algorithms hashes should be $($hashLengths[$Algorithms]) characters long. Supplied hash is $($Expected.Length) characters long."
+		return
 	}
 
 	function Get-Hashes {
@@ -156,10 +158,10 @@ function Compare-FileHash {
 
 			# Only print table headers once, for the first hash
 			if ((-not ($Quiet)) -and (-not ($tableHeaders))) {
-				Write-Output $table[$number][$Type] | Out-Host
+				$table[$number][$Type] | Out-Host
 				$script:tableHeaders = $true
 
-			} elseif (-not ($Quiet)) { Write-Output $table[$number][$Type] | Format-Table -HideTableHeaders | Out-Host }
+			} elseif (-not ($Quiet)) { $table[$number][$Type] | Format-Table -HideTableHeaders | Out-Host }
 		}
 	}
 
@@ -191,10 +193,8 @@ function Compare-FileHash {
 
 	# Print match results
 	if ($match) {
-		Write-Host -NoNewline -ForegroundColor Green "MATCH"
-		if ($Expected) { Write-Host -ForegroundColor Green " EXPECTED" }
+		Write-Host -ForegroundColor Green "MATCH$(if ($Expected) { " EXPECTED" })"
 	} else {
-		Write-Host -NoNewline -ForegroundColor Red "MISMATCH"
-		if ($Expected) { Write-Host -ForegroundColor Red ", expected $Expected" }
+		Write-Host -ForegroundColor Red "MISMATCH$(if ($Expected) { ", expected $Expected" })"
 	}
 }

@@ -1,6 +1,6 @@
 <a name="top"></a>
 <p align="center">
-	<img src="PLACEHOLDER"/>
+	<img src="Design/Compare-FileHash.png"/>
 	<a href="LICENSE"><img src="https://badgen.net/static/license/GPL-3.0?icon=github"/></a>
 	<img src="https://badgen.net/static/PowerShell/3.0+/orange?icon=terminal"/>
 	<img src="https://badgen.net/static/.NET/None/green?icon=windows"/>

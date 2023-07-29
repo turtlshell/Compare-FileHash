@@ -44,7 +44,7 @@ PS > Set-ExecutionPolicy Bypass -Scope Process
 # Import the file
 PS > . .\Compare-FileHash.ps1
 ```
-<sup>¹ Installing using this method will require you to manually dot source (. .\\) the file each time you wish to use the module</sup>
+<sup>¹ Installing using this method will require you to manually dot source (. .\\) the file each time you wish to use the module.</sup>
 <a name="usage"></a>
 ## Usage 💡
 
@@ -84,7 +84,7 @@ PS > Compare-FileHash -Files 'C:\file1.txt' -Expected DA39A3EE5E6B4B0D3255BFEF95
 
 #### 📁 -Files (mandatory)
 
-The list of file paths, separated by commas, from which to compare the hashes. A minimum of two paths must be supplied (or one, if '-Expected' is passed), however there is no upper limit.
+The list of file paths, separated by commas, from which to compare the hashes. A minimum of two paths must be supplied (or one path, if '-Expected' is passed), however there is no upper limit.
 
 #### 🧮 -Algorithms (optional)
 
@@ -92,7 +92,7 @@ Determines which algorithm(s) are used to compute the specified files' hashes. Y
 
 #### ✔️ -Expected (optional)
 
-Allows you to specify the hash you are expecting, and compares the file(s) against it, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1, and limits '-Algorithms' to 1 type.
+Allows you to specify the hash you are expecting, and compares the file(s) against it, rather than against each other. Passing this switch reduces the minimum '-Files' limit from 2 to 1. Cannot be passed with '-Algorithms'
 
 #### 🔇 -Quiet (optional)
 
@@ -112,7 +112,7 @@ Compare-FileHash supports all algorithms which are supported by Get-FileHash. As
 - [SHA1](https://en.wikipedia.org/wiki/SHA-1#Attacks)²
 - [MD5](https://en.wikipedia.org/wiki/MD5#Security)²
 
-See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash#parameters) for more info.
+See Microsoft's help page on [Get-FileHash](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash#parameters) for more information.
 
 <sup>² Please note that these algorithms are considered [insecure](https://en.wikipedia.org/wiki/SHA-1#Comparison_of_SHA_functions). If you're dealing with something sensitive, consider using SHA256 or above.</sup>
 <a name="license"></a>
@@ -126,6 +126,6 @@ Contributions/issues are welcome. I will consider feature requests if I like you
 
 Drop a ⭐️ if you found this useful!
 
-This readme was last updated on July 27, 2023.
+This readme was last updated on July 29, 2023.
 
 [⬆️ Back to top ⬆️](#top)
